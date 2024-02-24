@@ -11,7 +11,7 @@ It does NOT include:
 - Custom light colors (it just uses the vanilla lightmap instead)
 - Block shading
 
-### How do shadows (in general) work?
+## How do shadows (in general) work?
 The first thing you'll need is called a shadow map.
 This is, roughly speaking, a picture of the world from the perspective of the sun, instead of the player.
 In minecraft, the shadow pass renders first before everything else.
@@ -31,7 +31,7 @@ other programs can use this to determine whether or not something is *visible* f
 If something is not visible from the sun, then shadows should be drawn at that location.
 Optionally, if something is visible from the sun, you can also increase its brightness to the max even if it has a low skylight level.
 
-### So, how can shaders use the shadow map in practice?
+## So, how can shaders use the shadow map in practice?
 The shadow map has the camera moved to a different position than normal.
 As such, you can't just sample `shadowtex0` at texcoord.
 Instead, you have to transform the current player-space vector into shadow-space.
@@ -49,14 +49,14 @@ in which case putting it in composite is a better option.
 This example pack draws shadows on top of things in `gbuffers_textured`.
 It also draws shadows by just changing lmcoord. Nothing fancy here.
 
-### How do colored shadows work?
+## How do colored shadows work?
 Colored shadows work just like regular shadows, but instead of just testing `shadowtex0`, you also test `shadowtex1`.
 Since `shadowtex1` only contains opaque geometry, sampling this will tell you if you need to apply "normal" (non-colored) shadows or not.
 If you don't need to apply normal shadows, try colored shadows via `shadowtex0` next.
 `shadowcolor0` or `shadowcolor1` can then be used to determine what color the shadow should be.
 This can then be mixed or multiplied by the albedo in whatever way suits your desire.
 
-### What is shadow bias, and why is it needed?
+## What is shadow bias, and why is it needed?
 Assume your surface is visible to the sun.
 When computing its depth in shadow space, you'd expect to get the same value as you'd get from sampling `shadowtex0`, right?
 Wrong. Unfortunately, we don't live in such a perfect world.
@@ -86,7 +86,7 @@ This allows larger shadow biases (which itself comes with less chance of shadow 
 while avoiding peter panning at the same time. This tutorial includes an option
 named `NORMAL_BIAS` which can be used to configure which direction to offset in.
 
-### What is shadow distortion?
+## What is shadow distortion?
 Drawing the shadow map means drawing the entire world twice per frame. This means reduced framerates.
 One way to increase framerate a bit is to lower the resolution of the shadow map.
 The maximum resolution that most graphics cards can handle is 8192x8192.
